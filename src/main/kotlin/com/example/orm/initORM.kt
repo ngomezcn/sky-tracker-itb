@@ -29,7 +29,7 @@ object ORM {
         if(System.getenv("RAILWAY") != null)
         {
             db = Database.connect(
-                "jdbc:postgresql://${env("PGHOST")}:${env("PGPORT")}/${env("PGDATABASE")}",
+                "postgresql://${env("PGHOST")}:${env("PGPORT")}/${env("PGDATABASE")}",
                 driver = "com.impossibl.postgres.jdbc.PGDriver",
                 user = env("PGUSER"),
                 password = env("PGPASSWORD")
@@ -81,7 +81,6 @@ object ORM {
                 // Cargamos los sats desde un fichero o desde la api, por el momento lo dejo en el fichero porque son bastantes datos
 
                 //val satellitesList = Repository().getAllSatellites()
-
 
                 val file = File("sats.csv")
 
