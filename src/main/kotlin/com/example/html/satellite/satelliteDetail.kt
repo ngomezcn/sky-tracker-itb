@@ -159,6 +159,89 @@ fun FlowContent.satelliteDetail(
                             }
                         }
                     }
+
+                    section {
+                        div("card bg-light") {
+                            div("card-body") {
+
+                                if(isTracking)
+                                {
+                                    form {
+                                        div("form-row") {
+                                            div("col-md-4") {
+                                                label {
+                                                    htmlFor = "validationTooltip01"
+                                                    +"""Observer coordinates"""
+                                                }
+                                                input(classes = "form-control") {
+                                                    disabled = true
+                                                    type = InputType.text
+                                                    placeholder = "0.000000,0.000000"
+                                                    value = "0.000000,0.000000"
+                                                    required = true
+                                                }
+                                            }
+                                            div("custom-control custom-checkbox mb-3") {
+                                                input(classes = "custom-control-input") {
+                                                    type = InputType.checkBox
+                                                    disabled = true
+                                                    checked = true
+                                                }
+                                                label("custom-control-label") { +"""Obtain automatically""" }
+                                                div("invalid-feedback") { +"""Example invalid feedback text""" }
+                                            }
+                                        }
+
+                                        button(classes = "btn btn-light mb-2") {
+                                            type = ButtonType.submit
+                                            +"""Untrack"""
+                                        }
+                                    }
+                                } else
+                                {
+                                    form {
+                                        action = application.href(Account.TrackingList())
+                                        method = FormMethod.post
+                                        encType = FormEncType.multipartFormData
+
+                                        div("form-row") {
+                                            div("col-md-4") {
+                                                label {
+                                                    htmlFor = "validationTooltip01"
+                                                    +"""Observer coordinates"""
+                                                }
+                                                input(classes = "form-control") {
+                                                    disabled = true
+                                                    type = InputType.text
+                                                    placeholder = "0.000000,0.000000"
+                                                    value = "0.000000,0.000000"
+                                                    required = true
+                                                }
+                                            }
+                                            div("custom-control custom-checkbox mb-3") {
+                                                input(classes = "custom-control-input") {
+                                                    type = InputType.checkBox
+                                                    disabled = true
+                                                    checked = true
+                                                }
+                                                label("custom-control-label") { +"""Obtain automatically""" }
+                                                div("invalid-feedback") { +"""Example invalid feedback text""" }
+                                            }
+                                        }
+
+                                        button(classes = "btn btn-primary") {
+                                            type = ButtonType.submit
+                                            +"""Track Satellite"""
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    br {  }
+                    br {  }
+
                     //+"""-- Comments section-->"""
                     section {
                         div("card bg-light") {
@@ -201,7 +284,6 @@ fun FlowContent.satelliteDetail(
                                 }
                                 br {
                                 }
-                                //+"""-- Comment with nested comments-->"""
 
                                 for (comment in comments) {
                                     div("shadow-sm p-4 mb-4 bg-white") {
@@ -227,61 +309,6 @@ fun FlowContent.satelliteDetail(
                                         }
                                     }
                                 }
-                                /*div("shadow-sm p-4 mb-4 bg-white") {
-                                    div("d-flex") {
-                                        div("flex-shrink-0") {
-                                            img(classes = "rounded-circle") {
-                                                src = "https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                alt = "..."
-                                            }
-                                        }
-                                        div("ms-3") {
-                                            div("fw-bold") { +"""Commenter Name""" }
-                                            +"""When I look at the universe and all the ways the universe wants to kill
-                                                us,
-                                                I find it hard to reconcile that with statements of beneficence."""
-                                        }
-                                    }
-                                }
-                                div("shadow-sm p-4 mb-4 bg-white") {
-                                    div("d-flex") {
-                                        div("flex-shrink-0") {
-                                            img(classes = "rounded-circle") {
-                                                src = "https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                alt = "..."
-                                            }
-                                        }
-                                        div("ms-3") {
-                                            div("fw-bold") { +"""Commenter Name""" }
-                                            p {
-                                                +"""When I look at the universe and all the ways the universe wants to kill
-                                                    us,
-                                                    I find it hard to reconcile that with statements of beneficence."""
-                                            }
-                                            img(classes = "img-responsive center-block img-fluid rounded") {
-                                                style = "height: 250px;"
-                                                src =
-                                                    "https://www.heavens-above.com/orbitdisplay.aspx?icon=iss&width=200&height=200&mode=A&satid=${sat.noradCatId}"
-                                            }
-                                        }
-                                    }
-                                }
-                                div("shadow-sm p-4 mb-4 bg-white") {
-                                    div("d-flex") {
-                                        div("flex-shrink-0") {
-                                            img(classes = "rounded-circle") {
-                                                src = "https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                alt = "..."
-                                            }
-                                        }
-                                        div("ms-3") {
-                                            div("fw-bold") { +"""Commenter Name""" }
-                                            +"""When I look at the universe and all the ways the universe wants to kill
-                                                us,
-                                                I find it hard to reconcile that with statements of beneficence."""
-                                        }
-                                    }
-                                }*/
                             }
                         }
                     }
@@ -290,8 +317,9 @@ fun FlowContent.satelliteDetail(
         }
     }
 
-    if (isTracking) {
 
+
+    if (isTracking) {
         form {
             action = application.href(Account.TrackingList())
             method = FormMethod.delete
@@ -329,6 +357,7 @@ fun FlowContent.satelliteDetail(
             }
         }
     }
+
 }
 
 

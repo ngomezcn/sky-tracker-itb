@@ -33,12 +33,12 @@ ktor {
 
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-swagger:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-client-auth:2.2.2")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-
 
     // ====
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
@@ -53,17 +53,20 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
 
+    // Database
+    implementation("org.jetbrains.exposed", "exposed-core", "0.40.1")
+    implementation("org.jetbrains.exposed", "exposed-dao", "0.40.1")
+    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.40.1")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.40.1")
     implementation("com.h2database:h2:2.1.214")
     implementation("org.slf4j:slf4j-simple:2.0.3")
     implementation("com.impossibl.pgjdbc-ng", "pgjdbc-ng", "0.8.3")
     implementation("org.postgresql:postgresql:42.2.2")
     implementation("org.slf4j:slf4j-simple:2.0.3")
-    implementation("org.jetbrains.exposed", "exposed-core", "0.40.1")
-    implementation("org.jetbrains.exposed", "exposed-dao", "0.40.1")
-    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.40.1")
-    implementation("org.jetbrains.exposed:exposed-java-time:0.40.1")
 
-    //implementation("io.ktor:ktor-server-swagger:2.2.2")
+    // Email
+    implementation("org.apache.commons:commons-email:1.5")
+
     implementation("io.ktor:ktor-server-cors:$ktor_version")
     implementation("io.ktor:ktor-server-resources:$ktor_version")
 }

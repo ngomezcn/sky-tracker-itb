@@ -16,6 +16,7 @@ import io.ktor.http.content.*
 import io.ktor.resources.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
+import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
@@ -88,6 +89,10 @@ fun Route.satelliteRoutes() {
             val comments = satCommentRepository.getAllBySatellite(sat)
 
             call.respondHtmlTemplate(AppLayout(application)) {
+
+
+                val a = call.request.origin
+
                 content{
                     transaction {
                         satelliteDetail(sat, comments, trackedSat != null ,application)

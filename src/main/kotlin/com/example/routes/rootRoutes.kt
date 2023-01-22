@@ -5,6 +5,7 @@ import com.example.html.root.home
 import io.ktor.resources.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
+import io.ktor.server.plugins.swagger.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -17,6 +18,10 @@ class Root(){
     @Serializable
     @Resource("home")
     class Home(val parent: Root = Root())
+
+    @Serializable
+    @Resource("api")
+    class Api(val parent: Root = Root())
 }
 
 fun Route.rootRoutes() {
@@ -29,5 +34,9 @@ fun Route.rootRoutes() {
                 }
             }
         }
+    }
+    swaggerUI(path = application.href(Root.Api())) {
+
+
     }
 }

@@ -29,7 +29,7 @@ object ApiClient {
     }
 }
 
-class Repository {
+class RestRepository {
 
     private val apiClient = ApiClient
 

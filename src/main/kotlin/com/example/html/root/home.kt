@@ -118,7 +118,7 @@ END;
                             }
                             div("col mb-5 mb-md-0 h-100") {
                                 div("feature bg-primary bg-gradient text-white rounded-3 mb-3") {
-                                    i("bi bi-chat") {
+                                    i("bi bi-globe") {
                                     }
                                 }
                                 h2("h5") { +"""Interactive orbit viewer""" }
@@ -126,7 +126,7 @@ END;
                             }
                             div("col h-100") {
                                 div("feature bg-primary bg-gradient text-white rounded-3 mb-3") {
-                                    i("bi bi-globe") {
+                                    i("bi bi-chat") {
                                     }
                                 }
                                 h2("h5") { +"""Chat""" }

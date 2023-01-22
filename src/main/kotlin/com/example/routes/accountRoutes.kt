@@ -53,7 +53,7 @@ fun Route.accountRoutes() {
         call.respondHtmlTemplate(AppLayout(application)) {
             content{
                 transaction {
-                    trackingList()
+                    trackingList(application)
                 }
             }
         }
@@ -65,12 +65,16 @@ fun Route.accountRoutes() {
 
         val data = call.receiveMultipart()
         var _idSatellite = 0
+        var _latitude : Float = 0.0F
+        var _longitude : Float = 0.0F
 
         data.forEachPart { part ->
             when (part) {
                 is PartData.FormItem -> {
                     when (part.name){
                         "idSatellite" -> _idSatellite = part.value.toInt()
+                        "latitude" -> _latitude = part.value.toFloat()
+                        "longitude" -> _longitude = part.value.toFloat()
                     }
                 }
                 is PartData.FileItem -> {
@@ -91,6 +95,8 @@ fun Route.accountRoutes() {
             UserTrackingSatDAO.new {
                 idSatellite = oSatellite!!.id
                 idUser = loggedUser!!.id
+                latitude = _latitude
+                longitude = _longitude
             }
         }
 

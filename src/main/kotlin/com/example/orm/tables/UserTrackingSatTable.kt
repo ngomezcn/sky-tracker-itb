@@ -14,6 +14,8 @@ object UserTrackingSatTable : IntIdTable() {
 
     val idUser = reference("idUser", UsersTable)
     val idSatellite = reference("idSatellite", SatellitesTable)
+    val latitude : Column<Float> = float ("latitude")
+    val longitude : Column<Float> = float ("longitude")
     val trackingDate = datetime("trackingDate").defaultExpression(CurrentDateTime)
 }
 
@@ -24,5 +26,7 @@ class UserTrackingSatDAO(id: EntityID<Int>) : IntEntity(id) {
 
     var idUser by UserTrackingSatTable.idUser
     var idSatellite by UserTrackingSatTable.idSatellite
+    var latitude by UserTrackingSatTable.latitude
+    var longitude by UserTrackingSatTable.longitude
     var trackingDate by UserTrackingSatTable.trackingDate
 }

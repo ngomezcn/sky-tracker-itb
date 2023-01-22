@@ -43,7 +43,7 @@ fun FlowContent.navigation(application: Application) {
                         }
                         li("nav-item") {
                             a(classes = "nav-link") {
-                                href = "api"
+                                href = application.href(Root.Api())
                                 +"""API"""
                             }
                         }
