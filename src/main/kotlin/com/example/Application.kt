@@ -41,7 +41,8 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
 
-
+    print(System.getenv("DATABASE_URL"))
+    print(System.getenv("PostgreSQL.DATABASE_URL"))
 
    ORM.connect()
     ORM.createSchemas()
