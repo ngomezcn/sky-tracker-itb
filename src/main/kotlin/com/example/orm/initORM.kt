@@ -17,6 +17,12 @@ object ORM {
 
         val os = System.getProperty("os.name").lowercase()
 
+        if(System.getenv("RAILWAY") != null)
+        {
+            db = Database.connect("jdbc:h2:mem:regular;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
+            return
+        }
+
         if(os.contains("windows")) {
             db = Database.connect(
                 "jdbc:postgresql://localhost:5432/postgres",
@@ -36,7 +42,7 @@ object ORM {
             )
             return
         }
-        
+
         db = Database.connect("jdbc:h2:mem:regular;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
     }
 
