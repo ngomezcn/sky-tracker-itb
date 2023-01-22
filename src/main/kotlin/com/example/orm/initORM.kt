@@ -3,6 +3,7 @@ package com.example.orm
 import com.example.models.SpaceTrack.STSatelliteCatalog
 import com.example.orm.tables.*
 import com.example.orm.modelsoSatellite.UsersTable
+import com.example.repositories.SatellitesRepository
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
@@ -67,9 +68,11 @@ object ORM {
 
                 // Cargamos los sats desde un fichero o desde la api, por el momento lo dejo en el fichero porque son bastantes datos
                 //satellitesList = Repository().getAllSatellites()
+
+
                 var satellitesList = Json.decodeFromString<List<STSatelliteCatalog>>(File("sats.json").readText(Charsets.UTF_8))
 
-                satellitesList = satellitesList!!.sortedBy { it.NORADCATID!!.toInt() }
+
 
                 for (sat in satellitesList!!) {
                     SatelliteDAO.new {
