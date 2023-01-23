@@ -1,26 +1,30 @@
 package com.example.repositories
 
 import com.example.database.modelsoSatellite.UsersTable
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.count
-import org.jetbrains.exposed.sql.selectAll
+import com.example.database.tables.UserTrackingSatTable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserRepository {
 
-    fun getActiveUsers(): List<ResultRow> {
+    fun groupByUsersTracking(): MutableMap<String, String>  {
 
-        var result: Query? = null
-
+        val result : MutableMap<String, String> = mutableMapOf()
         transaction {
-            result = UsersTable
-                .slice(UsersTable.id.count(), UsersTable.email)
+            addLogger(StdOutSqlLogger)
+            val query = UsersTable
+                .innerJoin(UserTrackingSatTable)
+                .slice(UsersTable.email, UserTrackingSatTable.id.count())
                 .selectAll()
                 .groupBy(UsersTable.email)
+
+            query.map {
+                result.set(it[UsersTable.email],
+                    it[UserTrackingSatTable.id.count()].toString() )
+            }
         }
-
-        return result?.toList() ?: listOf()
+        return result
     }
-
 }

@@ -264,7 +264,6 @@ fun Route.accountRoutes() {
                     }
                 }
                 is PartData.FileItem -> {
-
                 }
                 else -> {
                 }

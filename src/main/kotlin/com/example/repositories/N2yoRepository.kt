@@ -9,9 +9,7 @@ import io.ktor.client.plugins.cookies.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
-
-
-class SpaceTrackRepository
+/*class SpaceTrackRepository
 {
 
     private val apiClient = ApiClient
@@ -38,7 +36,7 @@ class SpaceTrackRepository
             throw Exception("Cannot log in Space Track, check credentials")
         }
     }
-}
+}*/
 
 class N2yoRepository {
 
@@ -55,6 +53,4 @@ class N2yoRepository {
             N2yo.baseUrl + "/satellite/visualpasses/" + noradCadID + "/" + observator.latitude + "/" + observator.longitude + "/" + observator.altitude + "/2/300/&apiKey=" + N2yo.apiKey
         ).body()
     }
-
-
 }

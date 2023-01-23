@@ -11,49 +11,22 @@ info:
     https://editor.swagger.io/
 
   version: 1.0.11
-externalDocs:
-  description: Find out more about OpenAPI Swagger 3.0
-  url: http://swagger.io
 servers:
-  - url: localhost:${PORT}
+  - url: localhost:8080/api
 paths:
-  /active_users:
+  /sats_by_user:
     get:
-      tags:
-        - account
-      summary: Get the current users num of SkyTracker
-      description: Update an existing pet by Id
-      operationId: updatePet
-      requestBody:
-        description: Update an existent pet in the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Pet'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Pet'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Pet'
-        required: true
+      summary: Number of satellites followed by each user
+      description: If the user does not follow any satellite it will not appear.
+
       responses:
         '200':
-          description: Successful operation
+          description: A Json array of map<String, String>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pet'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
-        '405':
-          description: Validation exception
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+                type: object
+                properties:
+                  naim.gomez.7e5@itb.cat:
+                    type: integer
+                    description: The user ID.

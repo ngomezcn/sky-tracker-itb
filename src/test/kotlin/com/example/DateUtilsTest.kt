@@ -5,7 +5,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import java.util.*
 
-/*
+
 class DateUtilsTest {
 
     private val dateUtils = DateUtils()
@@ -38,4 +38,4 @@ class DateUtilsTest {
         val expected = "Mon Jan 23 12:26:05 CET 2023"
         assertEquals(expected, dateUtils.epochToDate(1674473165).toString())
     }
-}*/
+}

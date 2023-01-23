@@ -17,18 +17,7 @@ import java.nio.file.Paths
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.resources.*
 
-/*
-select T0.username, count(*)
-from users T0
-inner join satcomment T1
-on T0.id = T1."idUser"
-where T0.email = 'naimgomezcn@gmail.com'
-group by T0.username
-*/
-
 var loggedUser : UserDAO? = null
-
-
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -36,7 +25,7 @@ fun Application.module() {
 
     val dm = DatabaseManager()
 
-    // ESTO ES SOLO TEMPORAL DURANTE EL DESARROLLO
+    // ESTO ES SOLO TEMPORAL DURANTE TESTING
     transaction {
         addLogger(StdOutSqlLogger)
 

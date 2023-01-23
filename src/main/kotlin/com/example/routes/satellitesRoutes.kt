@@ -176,9 +176,8 @@ fun Route.satelliteRoutes() {
             call.respondText("Satellite does not exist", status = HttpStatusCode.NotFound)
         }
 
-        var commentDAO : SatCommentDAO? = null
         transaction {
-            commentDAO = SatCommentDAO.new {
+            SatCommentDAO.new {
                 idSatellite = satToComment!!
                 idUser = loggedUser!!
                 comment = _comment

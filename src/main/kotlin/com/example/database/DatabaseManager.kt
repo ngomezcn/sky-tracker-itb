@@ -11,7 +11,6 @@ import java.io.FileReader
 
 class DatabaseManager {
     lateinit var db: Database
-
     init {
         connect()
         createSchemas()
@@ -25,6 +24,8 @@ class DatabaseManager {
     private fun connect() {
 
         val os = System.getProperty("os.name").lowercase()
+        //db = Database.connect("jdbc:h2:mem:regular;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
+        //return
 
         if(System.getenv("RAILWAY") != null)
         {

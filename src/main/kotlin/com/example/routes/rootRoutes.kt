@@ -21,7 +21,6 @@ class Root(){
 
 
 }
-
 fun Route.rootRoutes() {
 
     get("/") {
@@ -37,5 +36,4 @@ fun Route.rootRoutes() {
             }
         }
     }
-
 }

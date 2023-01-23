@@ -1,5 +1,6 @@
 package com.example.repositories
 
+import com.example.database.modelsoSatellite.UserDAO
 import com.example.database.tables.*
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.select
