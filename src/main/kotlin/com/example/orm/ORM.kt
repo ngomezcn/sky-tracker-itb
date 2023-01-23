@@ -1,12 +1,7 @@
 package com.example.orm
 
-import com.example.models.SpaceTrack.STSatelliteCatalog
 import com.example.orm.tables.*
 import com.example.orm.modelsoSatellite.UsersTable
-import com.example.repositories.SatellitesRepository
-import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.BufferedReader

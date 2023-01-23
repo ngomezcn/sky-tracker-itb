@@ -1,5 +1,5 @@
 package com.example.models
 
-data class Position(val latitude: String, val longitude: String, val altitude: String) {
+data class Position(val latitude: Float, val longitude: Float, val altitude: Float) {
 
 }

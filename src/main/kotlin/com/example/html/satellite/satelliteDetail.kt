@@ -167,34 +167,19 @@ fun FlowContent.satelliteDetail(
                                 if(isTracking)
                                 {
                                     form {
-                                        div("form-row") {
-                                            div("col-md-4") {
-                                                label {
-                                                    htmlFor = "validationTooltip01"
-                                                    +"""Observer coordinates"""
-                                                }
-                                                input(classes = "form-control") {
-                                                    disabled = true
-                                                    type = InputType.text
-                                                    placeholder = "0.000000,0.000000"
-                                                    value = "0.000000,0.000000"
-                                                    required = true
-                                                }
-                                            }
-                                            div("custom-control custom-checkbox mb-3") {
-                                                input(classes = "custom-control-input") {
-                                                    type = InputType.checkBox
-                                                    disabled = true
-                                                    checked = true
-                                                }
-                                                label("custom-control-label") { +"""Obtain automatically""" }
-                                                div("invalid-feedback") { +"""Example invalid feedback text""" }
-                                            }
+                                        action = application.href(Account.UntrackSat())
+                                        method = FormMethod.post
+                                        encType = FormEncType.multipartFormData
+
+                                        input {
+                                            type = InputType.hidden
+                                            name = "idSatellite"
+                                            value = "${sat.id}"
                                         }
 
-                                        button(classes = "btn btn-light mb-2") {
+                                        button(classes = "btn btn-secondary mb-1") {
                                             type = ButtonType.submit
-                                            +"""Untrack"""
+                                            +"""Untrack satellite"""
                                         }
                                     }
                                 } else
@@ -226,6 +211,11 @@ fun FlowContent.satelliteDetail(
                                                 }
                                                 label("custom-control-label") { +"""Obtain automatically""" }
                                                 div("invalid-feedback") { +"""Example invalid feedback text""" }
+                                            }
+                                            input {
+                                                type = InputType.hidden
+                                                name = "idSatellite"
+                                                value = "${sat.id}"
                                             }
                                         }
 
@@ -267,13 +257,12 @@ fun FlowContent.satelliteDetail(
                                                 type = InputType.file
                                                 name = "image"
                                             }
-                                            input {
-                                                type = InputType.hidden
-                                                name = "idSatellite"
-                                                value = "${sat.id}"
-                                            }
                                         }
-
+                                        input {
+                                            type = InputType.hidden
+                                            name = "idSatellite"
+                                            value = "${sat.id}"
+                                        }
                                         div("col-auto my-1") {
                                             button(classes = "btn btn-primary") {
                                                 type = ButtonType.submit
@@ -312,47 +301,6 @@ fun FlowContent.satelliteDetail(
                             }
                         }
                     }
-                }
-            }
-        }
-    }
-
-
-
-    if (isTracking) {
-        form {
-            action = application.href(Account.TrackingList())
-            method = FormMethod.delete
-            encType = FormEncType.multipartFormData
-
-            input {
-                type = InputType.hidden
-                name = "idSatellite"
-                value = "${sat.id}"
-            }
-            div("form-group") {
-                button(classes = "btn btn-light mb-2") {
-                    type = ButtonType.submit
-                    +"""Already tracking"""
-                }
-            }
-        }
-
-    } else {
-        form {
-            action = application.href(Account.TrackingList())
-            method = FormMethod.post
-            encType = FormEncType.multipartFormData
-
-            input {
-                type = InputType.hidden
-                name = "idSatellite"
-                value = "${sat.id}"
-            }
-            div("form-group") {
-                button(classes = "btn btn-primary mb-2") {
-                    type = ButtonType.submit
-                    +"""Track satellite!"""
                 }
             }
         }

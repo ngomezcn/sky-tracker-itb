@@ -49,13 +49,16 @@ fun Route.satelliteRoutes() {
     val userTrackingSatRepository = UserTrackingSatRepository()
 
     get<Satellites> {
+        if(loggedUser == null)
+            call.respondRedirect(application.href(Account.SignIn()))
+
         var page : Int? = call.request.queryParameters["page"]?.toInt()
         var itemsPerPage : Int? = call.request.queryParameters["itemsPerPage"]?.toInt()
 
         if(page == null)
             page = 1
         if(itemsPerPage == null)
-            itemsPerPage = 500
+            itemsPerPage = 5000
 
         var sats = satellitesRepository.getAllInOrbit()
         var toSlice : IntRange = ((page * itemsPerPage).toInt()..(page * itemsPerPage+itemsPerPage).toInt())
@@ -76,9 +79,11 @@ fun Route.satelliteRoutes() {
     }
 
     get<Satellites.NoradId> {
+        if(loggedUser == null)
+            call.respondRedirect(application.href(Account.SignIn()))
 
         val id : String = if (call.parameters["noradId"].isNullOrBlank()) "" else call.parameters["noradId"]!!
-        val sat = satellitesRepository.find(id)
+        val sat = satellitesRepository.findByNoradId(id)
 
         val trackedSat = userTrackingSatRepository.findSatTrackedByUser(satId = sat!!.id, userId = loggedUser!!.id)
 

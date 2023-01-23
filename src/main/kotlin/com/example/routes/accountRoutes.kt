@@ -5,10 +5,15 @@ import com.example.html.account.createAccount
 import com.example.html.account.signIn
 import com.example.html.account.trackingList
 import com.example.loggedUser
+import com.example.models.Position
+import com.example.models.n2yo.N2VisualPasses
 import com.example.orm.modelsoSatellite.UserDAO
 import com.example.orm.modelsoSatellite.UsersTable
 import com.example.orm.tables.SatelliteDAO
 import com.example.orm.tables.UserTrackingSatDAO
+import com.example.repositories.RestRepository
+import com.example.repositories.SatellitesRepository
+import com.example.repositories.UserTrackingSatRepository
 import io.ktor.http.content.*
 import io.ktor.resources.*
 import io.ktor.server.application.*
@@ -44,16 +49,37 @@ class Account(){
     @Serializable
     @Resource("logout")
     class Logout(val parent: Account = Account())
+
+    @Serializable
+    @Resource("untrack_sat")
+    class UntrackSat(val parent: Account = Account())
 }
 
 fun Route.accountRoutes() {
-    //val accountRepository = FilmsRepository()
+    val userTrackingSatRepository = UserTrackingSatRepository()
+    val restRepository = RestRepository()
 
     get<Account.TrackingList> {
+        if(loggedUser == null)
+            call.respondRedirect(application.href(Account.SignIn()))
+        val visualPasses : MutableList<N2VisualPasses> = mutableListOf()
+
+        val trackedSats = userTrackingSatRepository.allByUser(loggedUser!!.id)
+
+        for(track in trackedSats) {
+
+            val sat = SatellitesRepository().find(track.idSatellite)
+
+
+            val pass = restRepository.getVisualPasses(sat!!.noradCatId, Position(track.latitude, track.longitude, 0.0F))
+
+            visualPasses.add(pass)
+        }
+        
         call.respondHtmlTemplate(AppLayout(application)) {
             content{
-                transaction {
-                    trackingList(application)
+                transaction {  
+                    trackingList(application, visualPasses)
                 }
             }
         }
@@ -103,7 +129,7 @@ fun Route.accountRoutes() {
         call.respondRedirect(application.href(Satellites.NoradId(noradId = oSatellite!!.noradCatId)))
     }
 
-    delete<Account.TrackingList> {
+    post<Account.UntrackSat> {
         if(loggedUser == null)
             call.respondRedirect(application.href(Account.SignIn()))
 
@@ -128,10 +154,12 @@ fun Route.accountRoutes() {
 
         if(oSatellite == null)
         {
-            call.respond("Not found")
+            call.respond("Satellite not found")
         }
+        val oTrack : UserTrackingSatDAO? = userTrackingSatRepository.findSatTrackedByUser(loggedUser!!.id, oSatellite!!.id)
+
         transaction {
-            oSatellite!!.delete()
+            oTrack!!.delete()
         }
 
         call.respondRedirect(application.href(Satellites.NoradId(noradId = oSatellite!!.noradCatId)))

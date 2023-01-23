@@ -41,8 +41,13 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
 
-    print(System.getenv("DATABASE_URL"))
-    print(System.getenv("PostgreSQL.DATABASE_URL"))
+    // Use the example values from Wikipedia for 2015-09-07 13:21 UTC.
+    println(JulianDay(JulianDay.REDUCED_JD).toInstant(57273.05625))
+    // Output: 2015-09-07T13:21:00.000000126Z
+    println(JulianDay(JulianDay.MODIFIED_JD).toInstant(57272.55625))
+    // Output: 2015-09-07T13:21:00.000000126Z
+    println(JulianDay(JulianDay.JULIAN_DATE).toInstant(2457273.05625))
+    // Output: 2015-09-07T13:20:59.999991953Z
 
    ORM.connect()
     ORM.createSchemas()
