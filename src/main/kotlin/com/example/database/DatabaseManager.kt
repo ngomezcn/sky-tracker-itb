@@ -30,7 +30,7 @@ class DatabaseManager {
         if(System.getenv("RAILWAY") != null)
         {
             db = Database.connect(
-                "postgresql://${env("PGHOST")}:${env("PGPORT")}/${env("PGDATABASE")}",
+                "pgsql://${env("PGHOST")}:${env("PGPORT")}/${env("PGDATABASE")}",
                 driver = "org.postgresql.Driver", //driver = "com.impossibl.postgres.jdbc.PGDriver",
                 user = env("PGUSER"),
                 password = env("PGPASSWORD")
