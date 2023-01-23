@@ -31,7 +31,7 @@ class DatabaseManager {
         {
             db = Database.connect(
                 "postgresql://${env("PGHOST")}:${env("PGPORT")}/${env("PGDATABASE")}",
-                driver = "com.impossibl.postgres.jdbc.PGDriver",
+                driver = "org.postgresql.Driver", //driver = "com.impossibl.postgres.jdbc.PGDriver",
                 user = env("PGUSER"),
                 password = env("PGPASSWORD")
             )
