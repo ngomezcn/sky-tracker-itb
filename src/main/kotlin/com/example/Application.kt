@@ -26,7 +26,7 @@ fun Application.module() {
     val dm = DatabaseManager()
 
     // ESTO ES SOLO TEMPORAL DURANTE TESTING
-    transaction {
+    /*transaction {
         addLogger(StdOutSqlLogger)
 
         val query = UsersTable.select {
@@ -36,7 +36,7 @@ fun Application.module() {
         if(UserDAO.wrapRows(query).count().toInt() > 0) {
             loggedUser =  UserDAO.wrapRows(query).toList().first()
         }
-    }
+    }*/
     // === == == == == =
 
     install(CORS)
