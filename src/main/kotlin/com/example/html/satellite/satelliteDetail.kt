@@ -33,9 +33,9 @@ fun FlowContent.satelliteDetail(
                                 }
                             }
                             //+"""-- Post meta content-->"""
-                            /*div("text-muted fst-italic mb-2") { +("#" + sat.noradCatId!!) }
+                            div("text-muted fst-italic mb-2") { +("#" + sat.noradCatId!!) }
                             //+"""-- Post categories-->"""
-                            a(classes = "badge bg-secondary text-decoration-none link-light") {
+                            /*a(classes = "badge bg-secondary text-decoration-none link-light") {
                                 href = "#!"
                                 +"""Debris"""
                             }

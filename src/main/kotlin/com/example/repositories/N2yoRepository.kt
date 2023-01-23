@@ -1,53 +1,24 @@
 package com.example.repositories
 
+import com.example.api.ApiClient
 import com.example.models.Position
 import com.example.models.SpaceTrack.STSatelliteCatalog
 import com.example.models.n2yo.N2VisualPasses
-import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.cookies.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-import kotlinx.serialization.json.Json
 
-object ApiClient {
-    val rest: HttpClient = HttpClient(CIO) {
 
-        install(HttpCookies)
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
-        }
-        engine {
-            requestTimeout = 0
-        }
-    }
-}
-
-class RestRepository {
+class SpaceTrackRepository
+{
 
     private val apiClient = ApiClient
-
-    object N2yo {
-        const val baseUrl = "https://api.n2yo.com/rest/v1"
-        const val apiKey = "PBXXJB-TLNPHZ-N5MLV7-4YQD"
-    }
 
     object SpaceTrack {
         const val baseUrl = "https://www.space-track.org"
         var cookie: Cookie? = null
-    }
-
-    suspend fun getVisualPasses(noradCadID: String, observator: Position): N2VisualPasses {
-
-        return apiClient.rest.get(
-            N2yo.baseUrl + "/satellite/visualpasses/" + noradCadID + "/" + observator.latitude + "/" + observator.longitude + "/" + observator.altitude + "/2/300/&apiKey=" + N2yo.apiKey
-        ).body()
     }
 
     suspend fun getAllSatellites(): List<STSatelliteCatalog> {
@@ -67,4 +38,23 @@ class RestRepository {
             throw Exception("Cannot log in Space Track, check credentials")
         }
     }
+}
+
+class N2yoRepository {
+
+    private val apiClient = ApiClient
+
+    object N2yo {
+        const val baseUrl = "https://api.n2yo.com/rest/v1"
+        const val apiKey = "PBXXJB-TLNPHZ-N5MLV7-4YQD"
+    }
+
+    suspend fun getVisualPasses(noradCadID: String, observator: Position): N2VisualPasses {
+
+        return apiClient.rest.get(
+            N2yo.baseUrl + "/satellite/visualpasses/" + noradCadID + "/" + observator.latitude + "/" + observator.longitude + "/" + observator.altitude + "/2/300/&apiKey=" + N2yo.apiKey
+        ).body()
+    }
+
+
 }

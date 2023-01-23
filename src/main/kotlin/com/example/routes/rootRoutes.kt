@@ -19,9 +19,7 @@ class Root(){
     @Resource("home")
     class Home(val parent: Root = Root())
 
-    @Serializable
-    @Resource("api")
-    class Api(val parent: Root = Root())
+
 }
 
 fun Route.rootRoutes() {
@@ -39,7 +37,5 @@ fun Route.rootRoutes() {
             }
         }
     }
-    swaggerUI(path = application.href(Root.Api())) {
 
-    }
 }

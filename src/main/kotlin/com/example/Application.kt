@@ -28,12 +28,7 @@ group by T0.username
 
 var loggedUser : UserDAO? = null
 
-val basePath  = File(DatabaseManager::class.java.protectionDomain.codeSource.location.path).path!!
-val pathAssetsSats = Paths.get(basePath).parent.parent.parent.combineSafe(Paths.get("resources/main/static/assets/sats"))
-/*fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
-}*/
+
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -60,3 +55,12 @@ fun Application.module() {
     configureSerialization()
     configureRouting()
 }
+
+
+/*fun main() {
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
+        .start(wait = true)
+}*/
+
+val basePath  = File(DatabaseManager::class.java.protectionDomain.codeSource.location.path).path!!
+val pathAssetsSats = Paths.get(basePath).parent.parent.parent.combineSafe(Paths.get("resources/main/static/assets/sats"))

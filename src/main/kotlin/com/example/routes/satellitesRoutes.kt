@@ -31,7 +31,7 @@ import java.nio.file.Files
 
 @Serializable
 @Resource("satellites")
-class Satellites(val page : Int? = null, val itemsPerPage : Int? = null){
+class Satellites(val page : Int? = null, val itemsPerPage : Int? = null, val filter : String? = null){
     @Serializable
     @Resource("{noradId}")
     class NoradId(val parent: Satellites = Satellites(), val noradId: String) {
@@ -40,6 +40,13 @@ class Satellites(val page : Int? = null, val itemsPerPage : Int? = null){
     @Serializable
     @Resource("comment")
     class Comment(val parent: Satellites = Satellites())
+}
+
+fun contains(str: String?, toContain: String) : Boolean {
+    if(str == null)
+        return false
+
+    return str.uppercase().contains(toContain.uppercase())
 }
 
 fun Route.satelliteRoutes() {
@@ -54,6 +61,7 @@ fun Route.satelliteRoutes() {
 
         var page : Int? = call.request.queryParameters["page"]?.toInt()
         var itemsPerPage : Int? = call.request.queryParameters["itemsPerPage"]?.toInt()
+        var filter : String? = call.request.queryParameters["filter"]
 
         if(page == null)
             page = 1
@@ -64,6 +72,12 @@ fun Route.satelliteRoutes() {
             it.launchDate
         }.toMutableList()
         sats.removeIf { it.launchDate == null || it.decayDate != null }
+
+        when(filter){
+            "noDebris" -> sats.removeIf { it.objectName?.uppercase()?.contains("DEB") ?: true }
+            "debris" -> sats.retainAll { it.objectName?.uppercase()?.contains("DEB") ?: false }
+            "starlink" -> sats.retainAll { it.objectName?.uppercase()?.contains("STAR") ?: false }
+        }
 
         var toSlice : IntRange = ((page * itemsPerPage).toInt()..(page * itemsPerPage+itemsPerPage).toInt())
         if (toSlice.last > sats.size)
@@ -76,7 +90,7 @@ fun Route.satelliteRoutes() {
 
             content{
                 transaction {
-                    satellitesList(application, toList, page)
+                    satellitesList(application, toList, page, itemsPerPage, filter)
                 }
             }
         }
@@ -103,7 +117,7 @@ fun Route.satelliteRoutes() {
 
                 content{
                     transaction {
-                        satelliteDetail(sat, comments, trackedSat != null ,application)
+                        satelliteDetail(sat, comments, trackedSat != null , application)
                     }
                 }
             }

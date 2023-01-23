@@ -11,7 +11,7 @@ import com.example.database.modelsoSatellite.UserDAO
 import com.example.database.modelsoSatellite.UsersTable
 import com.example.database.tables.SatelliteDAO
 import com.example.database.tables.UserTrackingSatDAO
-import com.example.repositories.RestRepository
+import com.example.repositories.N2yoRepository
 import com.example.repositories.SatellitesRepository
 import com.example.repositories.UserTrackingSatRepository
 import io.ktor.http.content.*
@@ -26,10 +26,7 @@ import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import kotlinx.serialization.Serializable
 import io.ktor.server.resources.post
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.addLogger
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 
 @Serializable
 @Resource("account")
@@ -53,11 +50,15 @@ class Account(){
     @Serializable
     @Resource("untrack_sat")
     class UntrackSat(val parent: Account = Account())
+
+    @Serializable
+    @Resource("active_users")
+    class ActiveUsers(val parent: Account = Account())
 }
 
 fun Route.accountRoutes() {
     val userTrackingSatRepository = UserTrackingSatRepository()
-    val restRepository = RestRepository()
+    val restRepository = N2yoRepository()
 
     get<Account.TrackingList> {
         if(loggedUser == null)
@@ -294,5 +295,13 @@ fun Route.accountRoutes() {
     get<Account.Logout> {
         loggedUser = null
         call.respondRedirect(application.href(Account.SignIn()))
+    }
+
+    get<Account.ActiveUsers> {
+        val a  = UsersTable
+            .slice(UsersTable.id.count(), UsersTable.email)
+            .selectAll()
+            .groupBy(UsersTable.email).toList()
+        call.respond(a)
     }
 }

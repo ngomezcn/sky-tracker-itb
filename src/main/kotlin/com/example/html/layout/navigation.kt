@@ -2,6 +2,7 @@ package com.example.html.layout
 
 import com.example.loggedUser
 import com.example.routes.Account
+import com.example.routes.Api
 import com.example.routes.Root
 import com.example.routes.Satellites
 import io.ktor.server.application.*
@@ -43,7 +44,7 @@ fun FlowContent.navigation(application: Application) {
                         }
                         li("nav-item") {
                             a(classes = "nav-link") {
-                                href = application.href(Root.Api())
+                                href = application.href(Api())
                                 +"""API"""
                             }
                         }
@@ -71,12 +72,6 @@ fun FlowContent.navigation(application: Application) {
                                         a(classes = "dropdown-item") {
                                             href = application.href(Account.TrackingList())
                                             +"""My tracking list"""
-                                        }
-                                    }
-                                    li {
-                                        a(classes = "dropdown-item") {
-                                            href = "#"
-                                            +"""Statistics"""
                                         }
                                     }
                                     li {

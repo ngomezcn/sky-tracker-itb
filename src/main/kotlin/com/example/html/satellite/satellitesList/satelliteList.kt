@@ -3,12 +3,13 @@ package com.example.templates.content
 import com.example.html.satellite.satellitesList.earthViewer
 import com.example.html.satellite.satellitesList.ulSatelliteList
 import com.example.database.tables.SatelliteDAO
+import com.example.routes.Account
 import com.example.routes.Satellites
 import io.ktor.server.application.*
 import io.ktor.server.resources.*
 import kotlinx.html.*
 
-fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO>, page: Int) {
+fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO>, page: Int, itemsPerPage : Int, filter : String?) {
 
             div("overlay") {
             id = "loading"
@@ -29,7 +30,7 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                 earthViewer()
             }
 
-            div("col-6 col-md-4 mt-1") {
+            div("col-6 col-md-4 mt-1 mb-2") {
                 id = "satListPanel"
                 style="opacity: 0;"
                 div("panel-heading") {
@@ -46,7 +47,8 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                                     name = "exampleRadios"
                                     id = "exampleRadios1"
                                     value = "option1"
-                                    checked = true
+                                    checked = filter == null
+                                    onChange = "location.href='${application.href(Satellites(page, itemsPerPage, null))}';"
                                 }
                                 label("form-check-label") {
                                     htmlFor = "exampleRadios1"
@@ -61,6 +63,8 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                                     name = "exampleRadios"
                                     id = "exampleRadios1"
                                     value = "option1"
+                                    checked = filter == "debris"
+                                    onChange = "location.href='${application.href(Satellites(page, itemsPerPage, "debris"))}';"
                                 }
                                 label("form-check-label") {
                                     htmlFor = "exampleRadios1"
@@ -77,6 +81,9 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                                     name = "exampleRadios"
                                     id = "exampleRadios1"
                                     value = "option1"
+                                    checked = filter == "starlink"
+                                    onChange = "location.href='${application.href(Satellites(page, itemsPerPage, "starlink"))}';"
+
                                 }
                                 label("form-check-label") {
                                     htmlFor = "exampleRadios1"
@@ -84,18 +91,20 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                                 }
                             }
                         }
+
                         div("col") {
                             div("form-check") {
                                 input(classes = "form-check-input") {
                                     type = InputType.radio
-                                    name = "exampleRadios"
-                                    id = "exampleRadios1"
-                                    value = "option1"
-                                    disabled = true
+                                    name = "filterNoDebris"
+                                    id = "filterNoDebris"
+                                    value = "filterNoDebris"
+                                    checked = filter == "noDebris"
+                                    onChange = "location.href='${application.href(Satellites(page, itemsPerPage, "noDebris"))}';"
                                 }
                                 label("form-check-label") {
                                     htmlFor = "exampleRadios1"
-                                    +"""Space stations (coming soon..)"""
+                                    +"""No debris"""
                                 }
                             }
                         }

@@ -24,7 +24,7 @@ class SatellitesRepository {
     }
 
     fun getAllInOrbit() : MutableList<SatelliteDAO> = transaction {
-        SatelliteDAO.find { SatellitesTable.decayDate eq null }.toMutableList()
+        SatelliteDAO.all().toMutableList()
     }
 
     fun getAllDebris() {
