@@ -13,21 +13,11 @@ import io.ktor.server.response.*
 
 fun Application.configureRouting() {
 
-
     routing {
-        println("Request")
-
-        get("/") {
-            call.respondRedirect(application.href(Root.Home()))
-        }
-
-
         static("/") {
             resources("static")
         }
 
-
-        // New routing
         rootRoutes()
         accountRoutes()
         satelliteRoutes()

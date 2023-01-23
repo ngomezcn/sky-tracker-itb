@@ -1,7 +1,7 @@
 package com.example.html.satellite.satellitesList
 
 import com.example.routes.Satellites
-import com.example.orm.tables.SatelliteDAO
+import com.example.database.tables.SatelliteDAO
 import io.ktor.server.application.*
 import io.ktor.server.resources.*
 import kotlinx.html.*

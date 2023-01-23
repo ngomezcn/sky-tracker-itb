@@ -7,10 +7,10 @@ import com.example.html.account.trackingList.trackingList
 import com.example.loggedUser
 import com.example.models.Position
 import com.example.models.n2yo.N2VisualPasses
-import com.example.orm.modelsoSatellite.UserDAO
-import com.example.orm.modelsoSatellite.UsersTable
-import com.example.orm.tables.SatelliteDAO
-import com.example.orm.tables.UserTrackingSatDAO
+import com.example.database.modelsoSatellite.UserDAO
+import com.example.database.modelsoSatellite.UsersTable
+import com.example.database.tables.SatelliteDAO
+import com.example.database.tables.UserTrackingSatDAO
 import com.example.repositories.RestRepository
 import com.example.repositories.SatellitesRepository
 import com.example.repositories.UserTrackingSatRepository
@@ -94,13 +94,19 @@ fun Route.accountRoutes() {
         var _latitude : Float = 0.0F
         var _longitude : Float = 0.0F
 
+
+
         data.forEachPart { part ->
             when (part) {
                 is PartData.FormItem -> {
                     when (part.name){
                         "idSatellite" -> _idSatellite = part.value.toInt()
-                        "latitude" -> _latitude = part.value.toFloat()
-                        "longitude" -> _longitude = part.value.toFloat()
+                        //"latitude" -> _latitude = part.value.toFloat()
+                        //"longitude" -> _longitude = part.value.toFloat()
+                        "position"-> {
+                            _latitude = part.value.split(",")[0].toFloat()
+                            _longitude = part.value.split(",")[1].toFloat()
+                        }
                     }
                 }
                 is PartData.FileItem -> {

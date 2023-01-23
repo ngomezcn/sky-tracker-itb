@@ -1,6 +1,6 @@
-package com.example.orm.tables
+package com.example.database.tables
 
-import com.example.orm.modelsoSatellite.UsersTable
+import com.example.database.modelsoSatellite.UsersTable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -8,7 +8,6 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.CurrentDateTime
 import org.jetbrains.exposed.sql.javatime.datetime
-import org.jetbrains.exposed.sql.transactions.transaction
 
 object UserTrackingSatTable : IntIdTable() {
 

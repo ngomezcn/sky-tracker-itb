@@ -26,6 +26,10 @@ class Root(){
 
 fun Route.rootRoutes() {
 
+    get("/") {
+        call.respondRedirect(application.href(Root.Home()))
+    }
+
     get<Root.Home> {
         call.respondHtmlTemplate(AppLayout(application)) {
             content {
@@ -36,7 +40,6 @@ fun Route.rootRoutes() {
         }
     }
     swaggerUI(path = application.href(Root.Api())) {
-
 
     }
 }

@@ -1,16 +1,12 @@
 package com.example.templates.content
 
-import com.example.epochToDate
 import com.example.html.satellite.satellitesList.earthViewer
 import com.example.html.satellite.satellitesList.ulSatelliteList
-import com.example.models.n2yo.N2VisualPasses
-import com.example.orm.tables.SatelliteDAO
-import com.example.routes.Account
+import com.example.database.tables.SatelliteDAO
 import com.example.routes.Satellites
 import io.ktor.server.application.*
 import io.ktor.server.resources.*
 import kotlinx.html.*
-import java.text.DateFormatSymbols
 
 fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO>, page: Int) {
 
@@ -46,10 +42,11 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                         div("col") {
                             div("form-check") {
                                 input(classes = "form-check-input") {
-                                    type = "radio"
+                                    type = InputType.radio
                                     name = "exampleRadios"
                                     id = "exampleRadios1"
                                     value = "option1"
+                                    checked = true
                                 }
                                 label("form-check-label") {
                                     htmlFor = "exampleRadios1"
@@ -60,7 +57,7 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                         div("col") {
                             div("form-check") {
                                 input(classes = "form-check-input") {
-                                    type = "radio"
+                                    type = InputType.radio
                                     name = "exampleRadios"
                                     id = "exampleRadios1"
                                     value = "option1"
@@ -76,7 +73,7 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                         div("col") {
                             div("form-check") {
                                 input(classes = "form-check-input") {
-                                    type = "radio"
+                                    type = InputType.radio
                                     name = "exampleRadios"
                                     id = "exampleRadios1"
                                     value = "option1"
@@ -90,11 +87,11 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                         div("col") {
                             div("form-check") {
                                 input(classes = "form-check-input") {
-                                    type = "radio"
+                                    type = InputType.radio
                                     name = "exampleRadios"
                                     id = "exampleRadios1"
                                     value = "option1"
-                                    disabled = "true"
+                                    disabled = true
                                 }
                                 label("form-check-label") {
                                     htmlFor = "exampleRadios1"

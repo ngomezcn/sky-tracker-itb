@@ -1,7 +1,7 @@
-package com.example.orm
+package com.example.database
 
-import com.example.orm.tables.*
-import com.example.orm.modelsoSatellite.UsersTable
+import com.example.database.tables.*
+import com.example.database.modelsoSatellite.UsersTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.BufferedReader
@@ -9,14 +9,20 @@ import java.io.File
 import java.io.FileReader
 
 
-object ORM {
+class DatabaseManager {
     lateinit var db: Database
 
-    fun env(a: String): String {
+    init {
+        connect()
+        createSchemas()
+        loadInitialData()
+    }
+
+    private fun env(a: String): String {
         return System.getenv(a)
     }
 
-    fun connect() {
+    private fun connect() {
 
         val os = System.getProperty("os.name").lowercase()
 
@@ -54,7 +60,7 @@ object ORM {
         db = Database.connect("jdbc:h2:mem:regular;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
     }
 
-    fun createSchemas() {
+    private fun createSchemas() {
         transaction {
             addLogger(StdOutSqlLogger)
 
@@ -65,25 +71,21 @@ object ORM {
         }
     }
 
-    fun loadInitialData() {
+    private fun loadInitialData() {
         transaction {
             addLogger(StdOutSqlLogger)
             if (SatelliteDAO.all().count() < 100) {
                 println("DATABASE IS EMPTY, LOADING DATA")
                 SatellitesTable.dropStatement()
 
-                // Cargamos los sats desde un fichero o desde la api, por el momento lo dejo en el fichero porque son bastantes datos
+                //val satellitesList = Repository().getAllSatellites() // Evitar cargar los datos desde la API
 
-                //val satellitesList = Repository().getAllSatellites()
-
+                // Cargar datos desde .csv linea por linea
                 val file = File("sats.csv")
-
                 BufferedReader(FileReader(file)).use { br ->
                     var line: String?
                     while (br.readLine().also { line = it } != null) {
-
                         val rawSat = line!!.split(",")
-
                         SatelliteDAO.new {
                             noradCatId = rawSat[0]
                             objectName = rawSat[1].ifEmpty { null }
@@ -99,10 +101,9 @@ object ORM {
                     }
                 }
 
+                // Carga los datos, pero es muy lento y puede llegar a desbordar el heap
                 /*val str = File("sats.json").readText(Charsets.UTF_8)
                 val satellitesList = Json.decodeFromString<List<STSatelliteCatalog>>(str)
-                //var satellitesList = Json.decodeFromString<List<STSatelliteCatalog>>(File("sats.json").readText(Charsets.UTF_8))
-
                 for (sat in satellitesList!!) {
                     SatelliteDAO.new {
                         noradCatId = sat.NORADCATID!!

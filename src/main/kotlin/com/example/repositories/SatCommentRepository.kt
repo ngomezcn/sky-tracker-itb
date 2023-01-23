@@ -1,8 +1,6 @@
 package com.example.repositories
 
-import com.example.loggedUser
-import com.example.orm.tables.*
-import kotlinx.html.*
+import com.example.database.tables.*
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction

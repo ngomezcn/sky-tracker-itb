@@ -3,9 +3,9 @@ package com.example.routes
 import com.example.html.AppLayout
 import com.example.html.satellite.satelliteDetail
 import com.example.loggedUser
-import com.example.orm.tables.SatCommentDAO
-import com.example.orm.tables.SatelliteDAO
-import com.example.orm.tables.SatellitesTable
+import com.example.database.tables.SatCommentDAO
+import com.example.database.tables.SatelliteDAO
+import com.example.database.tables.SatellitesTable
 import com.example.pathAssetsSats
 import com.example.repositories.SatCommentRepository
 import com.example.repositories.SatellitesRepository
@@ -58,24 +58,25 @@ fun Route.satelliteRoutes() {
         if(page == null)
             page = 1
         if(itemsPerPage == null)
-            itemsPerPage = 5
+            itemsPerPage = 5000
 
-        var sats = satellitesRepository.getAllInOrbit().sortedBy {
+        var sats : MutableList<SatelliteDAO> = satellitesRepository.getAllInOrbit().sortedBy {
             it.launchDate
-        }
+        }.toMutableList()
+        sats.removeIf { it.launchDate == null || it.decayDate != null }
 
         var toSlice : IntRange = ((page * itemsPerPage).toInt()..(page * itemsPerPage+itemsPerPage).toInt())
         if (toSlice.last > sats.size)
         {
             toSlice = (toSlice.first until sats.size)
         }
-        sats = sats.slice(toSlice)
+        var toList = sats.toList().slice(toSlice)
 
         call.respondHtmlTemplate(AppLayout(application)) {
 
             content{
                 transaction {
-                    satellitesList(application, sats, page)
+                    satellitesList(application, toList, page)
                 }
             }
         }
@@ -127,7 +128,7 @@ fun Route.satelliteRoutes() {
                     }
                 }
                 is PartData.FileItem -> {
-                    var fileBytes = part.streamProvider().readBytes()
+                    val fileBytes = part.streamProvider().readBytes()
 
                     if(fileBytes.isNotEmpty())
                     {

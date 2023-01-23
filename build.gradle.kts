@@ -64,9 +64,9 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.2")
     implementation("org.slf4j:slf4j-simple:2.0.3")
 
-    // Email
-    implementation("org.apache.commons:commons-email:1.5")
-
     implementation("io.ktor:ktor-server-cors:$ktor_version")
     implementation("io.ktor:ktor-server-resources:$ktor_version")
+
+    testImplementation(kotlin("test"))
+
 }

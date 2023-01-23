@@ -1,8 +1,9 @@
 package com.example.html.account.trackingList
 
-import com.example.epochToDate
+import com.example.DateUtils
 import com.example.models.n2yo.N2VisualPasses
 import com.example.routes.Account
+import com.example.routes.Satellites
 import io.ktor.server.application.*
 import io.ktor.server.resources.*
 import kotlinx.html.*
@@ -64,20 +65,23 @@ fun FlowContent.itemList(application:Application, pass: N2VisualPasses) {
                         tbody {
 
                             for (line in pass.passes) {
-                                val oStartDate = epochToDate(line.startUTC!!.toLong())
-                                val oMaxDate = epochToDate(line.maxUTC!!.toLong())
-                                val oEndDate = epochToDate(line.endUTC!!.toLong())
+
+                                val dateUtils = DateUtils()
+
+                                val oStartDate = dateUtils.epochToDate(line.startUTC!!.toLong())
+                                val oMaxDate = dateUtils.epochToDate(line.maxUTC!!.toLong())
+                                val oEndDate = dateUtils.epochToDate(line.endUTC!!.toLong())
 
                                 tr("clickableRow") {
 
-                                    td { +"${if (line.startUTC == null) "-" else "${oStartDate.day} of ${DateFormatSymbols().getMonths()[oStartDate.month]}"}" }
-                                    td { +"${if (line.startUTC == null) "-" else "${oStartDate.hours}:${oStartDate.minutes}"}" }
+                                    td { +if (line.startUTC == null) "-" else "${oStartDate.day} of ${DateFormatSymbols().months[oStartDate.month]}" }
+                                    td { +if (line.startUTC == null) "-" else "${oStartDate.hours}:${oStartDate.minutes}" }
                                     td { +if (line.startEl == null) "-" else line.startEl!!.toString() }
                                     td { +if (line.startAzCompass == null) "-" else line.startAzCompass!! }
-                                    td { +"${if (line.maxUTC == null) "-" else "${oMaxDate.hours}:${oMaxDate.minutes}"}" }
+                                    td { +if (line.maxUTC == null) "-" else "${oMaxDate.hours}:${oMaxDate.minutes}" }
                                     td { +if (line.maxEl == null) "-" else line.maxEl!!.toString() }
                                     td { +if (line.maxAzCompass == null) "-" else line.maxAzCompass!! }
-                                    td { +"${if (line.endUTC == null) "-" else "${oEndDate.hours}:${oEndDate.minutes}"}" }
+                                    td { +if (line.endUTC == null) "-" else "${oEndDate.hours}:${oEndDate.minutes}" }
                                     td { +if (line.endEl == null) "-" else line.endEl!!.toString() }
                                     td { +if (line.endAzCompass == null) "-" else line.endAzCompass!! }
                                 }
@@ -85,25 +89,20 @@ fun FlowContent.itemList(application:Application, pass: N2VisualPasses) {
                         }
                     }
 
-                    form {
-                        action = application.href(Account.UntrackSat())
-                        method = FormMethod.post
-                        encType = FormEncType.multipartFormData
 
-                        input {
-                            type = InputType.hidden
-                            name = "idSatellite"
-                            value = "${pass.info!!.satid}"
-                        }
 
-                        button(classes = "btn btn-secondary mb-1") {
-                            type = ButtonType.submit
-                            +"""Untrack"""
-                        }
-                    }
+
 
                 } else {
                     +"No visual passes"
+                }
+                form {
+                    action = application.href(Satellites.NoradId(noradId = pass.info?.satid.toString()))
+
+                    button(classes = "btn btn-primary mb-1") {
+                        type = ButtonType.submit
+                        +"""Sat detail"""
+                    }
                 }
             }
         }

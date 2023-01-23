@@ -1,7 +1,7 @@
-package com.example.orm.tables
+package com.example.database.tables
 
-import com.example.orm.modelsoSatellite.UserDAO
-import com.example.orm.modelsoSatellite.UsersTable
+import com.example.database.modelsoSatellite.UserDAO
+import com.example.database.modelsoSatellite.UsersTable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

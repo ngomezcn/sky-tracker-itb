@@ -1,12 +1,9 @@
 package com.example.repositories
 
-import com.example.orm.tables.SatelliteDAO
-import com.example.orm.tables.SatellitesTable
-import org.jetbrains.exposed.dao.Entity
+import com.example.database.tables.SatelliteDAO
+import com.example.database.tables.SatellitesTable
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class SatellitesRepository {
 
@@ -26,8 +23,8 @@ class SatellitesRepository {
         return result
     }
 
-    fun getAllInOrbit() : List<SatelliteDAO> = transaction {
-        SatelliteDAO.find { SatellitesTable.decayDate eq null }.toList()
+    fun getAllInOrbit() : MutableList<SatelliteDAO> = transaction {
+        SatelliteDAO.find { SatellitesTable.decayDate eq null }.toMutableList()
     }
 
     fun getAllDebris() {

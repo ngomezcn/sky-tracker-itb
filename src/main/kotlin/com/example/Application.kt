@@ -1,13 +1,11 @@
 package com.example
 
-import com.example.orm.ORM
-import com.example.orm.modelsoSatellite.UserDAO
-import com.example.orm.modelsoSatellite.UsersTable
+import com.example.database.DatabaseManager
+import com.example.database.modelsoSatellite.UserDAO
+import com.example.database.modelsoSatellite.UsersTable
 
 import com.example.plugins.*
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
 import io.ktor.util.*
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
@@ -30,7 +28,7 @@ group by T0.username
 
 var loggedUser : UserDAO? = null
 
-val basePath  = File(ORM::class.java.protectionDomain.codeSource.location.path).path!!
+val basePath  = File(DatabaseManager::class.java.protectionDomain.codeSource.location.path).path!!
 val pathAssetsSats = Paths.get(basePath).parent.parent.parent.combineSafe(Paths.get("resources/main/static/assets/sats"))
 /*fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
@@ -41,17 +39,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
 
-    // Use the example values from Wikipedia for 2015-09-07 13:21 UTC.
-    println(JulianDay(JulianDay.REDUCED_JD).toInstant(57273.05625))
-    // Output: 2015-09-07T13:21:00.000000126Z
-    println(JulianDay(JulianDay.MODIFIED_JD).toInstant(57272.55625))
-    // Output: 2015-09-07T13:21:00.000000126Z
-    println(JulianDay(JulianDay.JULIAN_DATE).toInstant(2457273.05625))
-    // Output: 2015-09-07T13:20:59.999991953Z
-
-   ORM.connect()
-    ORM.createSchemas()
-    ORM.loadInitialData()
+    val dm = DatabaseManager()
 
     // ESTO ES SOLO TEMPORAL DURANTE EL DESARROLLO
     transaction {

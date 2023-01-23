@@ -2,10 +2,9 @@ package com.example.html.satellite
 
 import com.example.routes.Account
 import com.example.routes.Satellites
-import com.example.orm.tables.*
+import com.example.database.tables.*
 import io.ktor.server.application.*
 import io.ktor.server.resources.*
-import jdk.jshell.spi.ExecutionControl
 import kotlinx.html.*
 
 fun FlowContent.satelliteDetail(
@@ -34,7 +33,7 @@ fun FlowContent.satelliteDetail(
                                 }
                             }
                             //+"""-- Post meta content-->"""
-                            div("text-muted fst-italic mb-2") { +("#" + sat.noradCatId!!) }
+                            /*div("text-muted fst-italic mb-2") { +("#" + sat.noradCatId!!) }
                             //+"""-- Post categories-->"""
                             a(classes = "badge bg-secondary text-decoration-none link-light") {
                                 href = "#!"
@@ -43,7 +42,7 @@ fun FlowContent.satelliteDetail(
                             a(classes = "badge bg-secondary text-decoration-none link-light") {
                                 href = "#!"
                                 +"""Low orbit"""
-                            }
+                            }*/
                         }
                         //+"""-- Preview image figure-->"""
                         figure("mb-4") {
@@ -111,35 +110,35 @@ fun FlowContent.satelliteDetail(
                                             scope = ThScope.row
                                             +"""Norad id"""
                                         }
-                                        td { + "${if(sat.noradCatId!! == null) "-" else sat.noradCatId}" }
+                                        td { + "${if(sat.noradCatId == null) "-" else sat.noradCatId}" }
                                     }
                                     tr {
                                         th {
                                             scope = ThScope.row
                                             +"""Object Name"""
                                         }
-                                        td { + "${if(sat.objectName!! == null) "-" else sat.objectName}" }
+                                        td { + "${if(sat.objectName == null) "-" else sat.objectName}" }
                                     }
                                     tr {
                                         th {
                                             scope = ThScope.row
                                             +"""Object ID"""
                                         }
-                                        td { + "${if(sat.objectID!! == null) "-" else sat.objectID}" }
+                                        td { + "${if(sat.objectID == null) "-" else sat.objectID}" }
                                     }
                                     tr {
                                         th {
                                             scope = ThScope.row
                                             +"""Country code"""
                                         }
-                                        td { + "${if(sat.countryCode!! == null) "-" else sat.countryCode}" }
+                                        td { + "${if(sat.countryCode == null) "-" else sat.countryCode}" }
                                     }
                                     tr {
                                         th {
                                             scope = ThScope.row
                                             +"""Launch date"""
                                         }
-                                        td { + "${if(sat.launchDate!! == null) "-" else sat.launchDate}" }
+                                        td { + "${if(sat.launchDate == null) "-" else sat.launchDate}" }
                                     }
                                     tr {
                                         th {
@@ -189,36 +188,46 @@ fun FlowContent.satelliteDetail(
                                         method = FormMethod.post
                                         encType = FormEncType.multipartFormData
 
+
                                         div("form-row") {
-                                            div("col-md-4") {
+                                            div("col-md-4 mb-3") {
                                                 label {
                                                     htmlFor = "validationTooltip01"
                                                     +"""Observer coordinates"""
                                                 }
                                                 input(classes = "form-control") {
-                                                    disabled = true
                                                     type = InputType.text
-                                                    placeholder = "0.000000,0.000000"
-                                                    value = "0.000000,0.000000"
+                                                    placeholder = "41.40771,2.161560"
+                                                    value = "41.40771,2.161560"
+                                                    name = "position"
                                                     required = true
                                                 }
                                             }
-                                            div("custom-control custom-checkbox mb-3") {
+                                            /*div("custom-control custom-checkbox mb-3") {
                                                 input(classes = "custom-control-input") {
                                                     type = InputType.checkBox
                                                     disabled = true
                                                     checked = true
                                                 }
-                                                label("custom-control-label") { +"""Obtain automatically""" }
+                                                label("custom-control-label") { +""" Obtain automatically""" }
                                                 div("invalid-feedback") { +"""Example invalid feedback text""" }
-                                            }
+                                            }*/
                                             input {
                                                 type = InputType.hidden
                                                 name = "idSatellite"
                                                 value = "${sat.id}"
                                             }
+                                            input {
+                                                type = InputType.hidden
+                                                name = "latitude"
+                                                value = "41.40771"
+                                            }
+                                            input {
+                                                type = InputType.hidden
+                                                name = "longitude"
+                                                value = "2.161560"
+                                            }
                                         }
-
                                         button(classes = "btn btn-primary") {
                                             type = ButtonType.submit
                                             +"""Track Satellite"""

@@ -1,6 +1,6 @@
 package com.example.repositories
 
-import com.example.orm.tables.*
+import com.example.database.tables.*
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction

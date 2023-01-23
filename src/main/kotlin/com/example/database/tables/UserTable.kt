@@ -1,4 +1,4 @@
-package com.example.orm.modelsoSatellite
+package com.example.database.modelsoSatellite
 
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
