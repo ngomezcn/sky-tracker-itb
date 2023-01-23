@@ -37,12 +37,73 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                 id = "satListPanel"
                 style="opacity: 0;"
                 div("panel-heading") {
-                    id="sat_list_heading"
+                    id = "sat_list_heading"
                     h3("panel-title") { +"""Artificial sats orbiting the earth""" }
+                    h6("panel-title") { +"""Filters""" }
                 }
-
-                               
-
+                form {
+                    div("row") {
+                        div("col") {
+                            div("form-check") {
+                                input(classes = "form-check-input") {
+                                    type = "radio"
+                                    name = "exampleRadios"
+                                    id = "exampleRadios1"
+                                    value = "option1"
+                                }
+                                label("form-check-label") {
+                                    htmlFor = "exampleRadios1"
+                                    +"""No filter"""
+                                }
+                            }
+                        }
+                        div("col") {
+                            div("form-check") {
+                                input(classes = "form-check-input") {
+                                    type = "radio"
+                                    name = "exampleRadios"
+                                    id = "exampleRadios1"
+                                    value = "option1"
+                                }
+                                label("form-check-label") {
+                                    htmlFor = "exampleRadios1"
+                                    +"""Debris"""
+                                }
+                            }
+                        }
+                    }
+                    div("row") {
+                        div("col") {
+                            div("form-check") {
+                                input(classes = "form-check-input") {
+                                    type = "radio"
+                                    name = "exampleRadios"
+                                    id = "exampleRadios1"
+                                    value = "option1"
+                                }
+                                label("form-check-label") {
+                                    htmlFor = "exampleRadios1"
+                                    +"""Starklink"""
+                                }
+                            }
+                        }
+                        div("col") {
+                            div("form-check") {
+                                input(classes = "form-check-input") {
+                                    type = "radio"
+                                    name = "exampleRadios"
+                                    id = "exampleRadios1"
+                                    value = "option1"
+                                    disabled = "true"
+                                }
+                                label("form-check-label") {
+                                    htmlFor = "exampleRadios1"
+                                    +"""Space stations (coming soon..)"""
+                                }
+                            }
+                        }
+                    }
+                }
 
                 nav {
                     ul("pagination") {
