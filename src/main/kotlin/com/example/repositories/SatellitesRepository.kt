@@ -27,15 +27,7 @@ class SatellitesRepository {
     }
 
     fun getAllInOrbit() : List<SatelliteDAO> = transaction {
-        SatelliteDAO.find { SatellitesTable.decayDate eq null }.toList().sortedByDescending {
-
-            if(it.launchDate.isNullOrEmpty()) {
-                LocalDate.parse("1800-01-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            } else
-            {
-                LocalDate.parse(it.launchDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            }
-        }
+        SatelliteDAO.find { SatellitesTable.decayDate eq null }.toList()
     }
 
     fun getAllDebris() {

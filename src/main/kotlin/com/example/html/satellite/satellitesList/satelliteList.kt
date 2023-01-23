@@ -1,13 +1,18 @@
 package com.example.templates.content
 
-import com.example.orm.tables.SatelliteDAO
+import com.example.epochToDate
 import com.example.html.satellite.satellitesList.earthViewer
 import com.example.html.satellite.satellitesList.ulSatelliteList
+import com.example.models.n2yo.N2VisualPasses
+import com.example.orm.tables.SatelliteDAO
+import com.example.routes.Account
+import com.example.routes.Satellites
 import io.ktor.server.application.*
+import io.ktor.server.resources.*
 import kotlinx.html.*
+import java.text.DateFormatSymbols
 
-
-fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO>) {
+fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO>, page: Int) {
 
             div("overlay") {
             id = "loading"
@@ -28,17 +33,20 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                 earthViewer()
             }
 
-            div("col-6 col-md-4") {
+            div("col-6 col-md-4 mt-1") {
                 id = "satListPanel"
                 style="opacity: 0;"
                 div("panel-heading") {
                     id="sat_list_heading"
-                    h3("panel-title") { +"""Result List""" }
-                    +"""Panel para buscar"""
+                    h3("panel-title") { +"""Artificial sats orbiting the earth""" }
                 }
+
+                               
+
+
                 nav {
                     ul("pagination") {
-                       /* if(page!!-1 > 0) {
+                       if(page!!-1 > 0) {
                             li("page-item") {
                                 a(classes = "page-link") {
                                     href = application.href(Satellites(page = page - 1))
@@ -87,7 +95,7 @@ fun FlowContent.satellitesList(application: Application, sats: List<SatelliteDAO
                                 href = application.href(Satellites(page = page + 1))
                                 +"""Next"""
                             }
-                        }*/
+                        }
                     }
                 }
                ulSatelliteList(application, sats)

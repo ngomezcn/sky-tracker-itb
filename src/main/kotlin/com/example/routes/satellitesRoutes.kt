@@ -58,9 +58,12 @@ fun Route.satelliteRoutes() {
         if(page == null)
             page = 1
         if(itemsPerPage == null)
-            itemsPerPage = 5000
+            itemsPerPage = 5
 
-        var sats = satellitesRepository.getAllInOrbit()
+        var sats = satellitesRepository.getAllInOrbit().sortedBy {
+            it.launchDate
+        }
+
         var toSlice : IntRange = ((page * itemsPerPage).toInt()..(page * itemsPerPage+itemsPerPage).toInt())
         if (toSlice.last > sats.size)
         {
@@ -72,7 +75,7 @@ fun Route.satelliteRoutes() {
 
             content{
                 transaction {
-                    satellitesList(application, sats)
+                    satellitesList(application, sats, page)
                 }
             }
         }
@@ -94,7 +97,6 @@ fun Route.satelliteRoutes() {
             val comments = satCommentRepository.getAllBySatellite(sat)
 
             call.respondHtmlTemplate(AppLayout(application)) {
-
 
                 val a = call.request.origin
 

@@ -3,7 +3,7 @@ package com.example.routes
 import com.example.html.AppLayout
 import com.example.html.account.createAccount
 import com.example.html.account.signIn
-import com.example.html.account.trackingList
+import com.example.html.account.trackingList.trackingList
 import com.example.loggedUser
 import com.example.models.Position
 import com.example.models.n2yo.N2VisualPasses
