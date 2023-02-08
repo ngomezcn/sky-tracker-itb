@@ -25,6 +25,8 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 import io.ktor.server.resources.post
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.select
 import java.io.File
 import java.nio.file.Files
@@ -177,6 +179,7 @@ fun Route.satelliteRoutes() {
         }
 
         transaction {
+            addLogger(StdOutSqlLogger)
             SatCommentDAO.new {
                 idSatellite = satToComment!!
                 idUser = loggedUser!!
